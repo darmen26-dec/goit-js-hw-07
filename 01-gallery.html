@@ -7,13 +7,26 @@
     <title>Image gallery</title>
     <link rel="stylesheet" href="css/common.css" />
     <link rel="stylesheet" href="css/styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.css"
+      rel="stylesheet"
+    />
+    <!-- ze strony https://www.jsdelivr.com/package/npm/basiclightbox?path=dist -->
   </head>
   <body>
     <p><a href="index.html">Go back</a></p>
 
     <!-- Add gallery items to this list -->
     <ul class="gallery"></ul>
-
+    <script src="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.js"></script>
+    <!-- ze strony https://www.jsdelivr.com/package/npm/basiclightbox?path=dist -->
     <script src="js/01-gallery.js" type="module"></script>
   </body>
 </html>
+
+<!-- 3. Połączenie skryptu i stylów biblioteki okna modalnego basicLightbox. 
+Użyj CDN serwisu jsdelivr i dodaj do projektu linki do zminimalizowanych 
+(.min) plików biblioteki. 
+
+https://www.jsdelivr.com/package/npm/basiclightbox?path=dist
+-->

@@ -22,38 +22,36 @@ const galleryItemsHTML = galleryItems
 
 galleryContainer.insertAdjacentHTML('beforeend', galleryItemsHTML);
 
-function initializeLightbox() {
+function initializeLightbox(event) {
+  event.preventDefault();
+
+  if (event.target.nodeName !== 'IMG') {
+    return;
+  }
+
   const content = document.createElement('div');
   const img = document.createElement('img');
+  img.src = event.target.dataset.source;
+
   content.append(img);
-  let instance = null;
 
-  galleryContainer.addEventListener('click', (event) => {
-    event.preventDefault();
-    if (event.target.nodeName !== 'IMG') {
-      return;
+  const instance = basicLightbox.create(content);
+  instance.show();
+
+  document.addEventListener('keydown', onEsc);
+
+  // Zamknięcie obrazka przyciskiem Escape
+  function onEsc(event) {
+    if (event.key === 'Escape') {
+      instance.close();
+      document.removeEventListener('keydown', onEsc);
     }
-    img.src = event.target.dataset.source;
-
-    if (!instance) {
-      instance = basicLightbox.create(content);
-    }
-
-    instance.show();
-
-    // Zamknięcie obrazka przyciskiem Escape
-    function onEsc(event) {
-      if (event.key === 'Escape') {
-        instance.close();
-        document.removeEventListener('keydown', onEsc);
-      }
-    }
-
-    document.addEventListener('keydown', onEsc);
-  });
+  }
 }
 
-initializeLightbox();
+galleryContainer.addEventListener('click', initializeLightbox);
+
+// INNE ROZWIĄZANIE, TEŻ POPRAWNE
 
 // import { galleryItems } from './gallery-items.js';
 // // Change code below this line
@@ -83,7 +81,7 @@ initializeLightbox();
 //   const content = document.createElement('div'); // Tworzy nowy element HTML <div>, który będzie używany jako kontener dla obrazka w lightboxie. Jest to miejsce, gdzie wyświetlany będzie powiększony obraz.
 //   const img = document.createElement('img'); // Tworzy nowy element HTML <img>, który będzie używany do wyświetlania obrazka wewnątrz lightboxa.
 //   content.append(img); // Dodaje element <img> do elementu <div>
-//   let instance = null;
+//   const instance = basicLightbox.create(content); // Tworzy instancję lightboxa, korzystając z biblioteki BasicLightbox. Ta instancja będzie używana do wyświetlania i zamykania lightboxa.
 
 //   galleryContainer.addEventListener('click', (event) => {
 //     event.preventDefault(); // Zapobiega domyślnemu działaniu kliknięcia, co jest istotne, by uniknąć otwierania linków klikając na miniaturę obrazu
@@ -91,10 +89,6 @@ initializeLightbox();
 //       return; // if... sprawdza, czy elementem docelowym kliknięcia jest element <img> - jeśli nie (np. jeśli kliknięcie było na innym elemencie), to funkcja kończy działanie i nie robi nic
 //     }
 //     img.src = event.target.dataset.source; // Ustawia źródło (src) elementu <img> na adres oryginalnego obrazka, który jest przechowywany w atrybucie data-source klikniętego elementu <img>. Dzięki temu wyświetlany jest odpowiedni obraz w lightboxie.
-
-//     if (!instance) {
-//       instance = basicLightbox.create(content); // Tworzy instancję lightboxa, korzystając z biblioteki BasicLightbox. Ta instancja będzie używana do wyświetlania i zamykania lightboxa.
-//     }
 
 //     instance.show(); // Shows a lightbox instance (https://github.com/electerious/basicLightbox#readme).  Wywołuje metodę show() na instancji lightboxa, co powoduje wyświetlenie lightboxa z wybranym obrazem
 
